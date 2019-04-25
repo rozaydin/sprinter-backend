@@ -1,0 +1,55 @@
+service:
+  name: typescript-helloworld  
+
+plugins:
+  - serverless-webpack
+  - serverless-domain-manager
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: dev
+  region: eu-central-1
+  timeout: 30
+  memorySize: 128
+  resourcePolicy:
+    - Effect: Allow
+      Principal: "*"
+      Action: execute-api:Invoke
+      Resource:
+        - execute-api:/*/*/*
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - "lambda:*"
+        - "logs:*"
+        - "cloudwatch:*"
+        - "ssm:*"
+      Resource: "*"
+  # vpc:
+  #   securityGroupIds:
+  #     - yyy
+  #   subnetIds:
+  #     - xxx
+  #     - xxx
+
+custom:
+  customDomain:
+    domainName: "typescripttest"
+    certificateArn: "xxx"
+    stage: "dev"
+    createRoute53Record: true
+    endpointType: "regional"
+  webpack:
+    webpackConfig: 'webpack.config.js'   # Name of webpack configuration file
+    includeModules: false
+    packager: 'npm'
+    excludeFiles: src/**/*.tsx
+
+functions:
+  hello:
+    handler: src/handler.hello
+    events:
+      - http:
+          method: get
+          path: hello

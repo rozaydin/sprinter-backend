@@ -1,0 +1,28 @@
+{
+  "name": "typescript-helloworld",
+  "version": "1.0.0",
+  "description": "Serverless webpack example using Typescript",
+  "main": "handler.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "dependencies": {
+    "eslint": "^5.16.0",
+    "source-map-support": "^0.5.10"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.17",
+    "@types/jest": "^24.0.11",
+    "@types/node": "^10.12.18",
+    "jest": "^24.7.1",
+    "serverless-domain-manager": "^3.2.1",
+    "serverless-webpack": "^5.2.0",
+    "ts-jest": "^24.0.2",
+    "ts-loader": "^5.3.3",
+    "typescript": "^3.2.4",
+    "webpack": "^4.30.0",
+    "webpack-cli": "^3.3.1"
+  },
+  "author": "Ridvan Ozaydin, ridvanozaydin@gmail.com",
+  "license": "MIT"
+}
