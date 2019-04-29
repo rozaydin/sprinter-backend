@@ -13,3 +13,6 @@ coverage
 
 # output directories
 lib
+
+# config files
+src/config
