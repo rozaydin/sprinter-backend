@@ -1,0 +1,5 @@
+import { TeamRepository } from "./TeamRepository";
+
+describe("TeamRepository Test Suite", () => {
+
+});

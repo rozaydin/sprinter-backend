@@ -3,11 +3,12 @@
     "lib": [
       "es2017"
     ],
-    "types": ["jest", "node"],
+    "types": ["mysql", "jest", "node", "graphql"],
     "moduleResolution": "node",    
     "sourceMap": true,
     "target": "es2017",
     "outDir": "lib",
+    "module": "commonjs", 
     "esModuleInterop": true
   },
   "exclude": [

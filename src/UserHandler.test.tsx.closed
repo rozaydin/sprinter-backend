@@ -1,0 +1,39 @@
+import { User, UserImpl } from "./model/User";
+// import { firestore } from "./service/Firestore";
+
+
+test("store user in firestore db", async () => {
+
+    const user = new UserImpl(-1, "Ridvan Ozaydin", "ridvanozaydin@gmail.com", "password", "image", "0555", "developer", -1, -1, -1);
+
+    // await firestore.collection("users").doc("ridvanozaydin@gmail.com").set(user.toPlainObj());
+    // const rozaydin = await firestore.collection("users").doc("ridvanozaydin@gmail.com").get();
+
+    // expect(rozaydin.get("name")).toBe("Ridvan Ozaydin");
+    // expect(rozaydin.get("email")).toBe("ridvanozaydin@gmail.com");
+    // expect(rozaydin.get("password")).toBe("password");
+    // expect(rozaydin.get("image")).toBe("");
+    // expect(rozaydin.get("mobile")).toBe("");
+    // expect(rozaydin.get("company")).toBe("rhtech");
+    // expect(rozaydin.get("project")).toBe("connectus");
+    // expect(rozaydin.get("team")).toBe("single");
+
+});
+
+test("User.validateObject should return true for valid user object", async () => {
+
+    const object = {
+        id: -1,
+        name: "test name",
+        email: "test email",
+        password: "test password",
+        image: "test image",
+        mobile: "test mobile",
+        companyId: -1,
+        projectId: -1,
+        teamId: -1,
+        role: "developer"
+    }
+    //
+    expect(UserImpl.validateObject(object)).toBe(true);
+})

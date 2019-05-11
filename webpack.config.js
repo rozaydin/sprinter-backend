@@ -20,7 +20,7 @@ module.exports = {
       {
         test: /\.tsx?$/,
         loader: 'ts-loader',
-        options: {onlyCompileBundledFiles: true},
+        options: { onlyCompileBundledFiles: true },
         exclude: /node_modules/,
       },
     ],

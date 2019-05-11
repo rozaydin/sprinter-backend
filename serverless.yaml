@@ -1,9 +1,8 @@
 service:
-  name: typescript-helloworld  
+  name: users
 
 plugins:
   - serverless-webpack
-  - serverless-domain-manager
 
 provider:
   name: aws
@@ -26,30 +25,24 @@ provider:
         - "cloudwatch:*"
         - "ssm:*"
       Resource: "*"
-  # vpc:
-  #   securityGroupIds:
-  #     - yyy
-  #   subnetIds:
-  #     - xxx
-  #     - xxx
 
 custom:
-  customDomain:
-    domainName: "typescripttest"
-    certificateArn: "xxx"
-    stage: "dev"
-    createRoute53Record: true
-    endpointType: "regional"
   webpack:
-    webpackConfig: 'webpack.config.js'   # Name of webpack configuration file
+    webpackConfig: "webpack.config.js" # Name of webpack configuration file
     includeModules: false
-    packager: 'npm'
+    packager: "npm"
     excludeFiles: src/**/*.tsx
 
 functions:
-  hello:
-    handler: src/handler.hello
+  user:
+    handler: src/UserHandler.createUser
+    layers:
+      - {Ref: FirebaseAdminLambdaLayer}
     events:
-      - http:
-          method: get
-          path: hello
+      - http: post users
+
+layers:
+  firebaseAdmin:
+    path: layer
+    compatibleRuntimes:
+      - nodejs8.10

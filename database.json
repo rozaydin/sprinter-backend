@@ -1,0 +1,10 @@
+{
+    "dev": {
+        "driver": "mysql",
+        "host": "localhost",
+        "database": "sprinter",
+        "user": "sprinter",
+        "password": "sprinter",
+        "multipleStatements": true
+    }
+}
