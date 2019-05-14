@@ -17,11 +17,7 @@ export class ProjectImpl implements Project {
     constructor(name, companyId) {
         this.name = name;
         this.companyId = companyId;
-    }
-
-    static isOf(object: Object) {
-        return isOf(object, ["name", "companyId"]);
-    }
+    }    
 }
 
 export class ProjectEntityImpl implements ProjectEntity {
