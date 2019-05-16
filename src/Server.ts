@@ -2,86 +2,16 @@ import { ApolloServer, gql } from "apollo-server";
 import { CompanyRepository } from "./repository/CompanyRepository";
 import { CompanyImpl, CompanyEntityImpl } from "./model/Company";
 import { ProjectRepository } from "./repository/ProjectRepository";
-import { Project, ProjectEntity, ProjectImpl, ProjectEntityImpl } from "./model/Project";
-import { Team, TeamEntity, TeamImpl, TeamEntityImpl } from "./model/Team";
 import { TeamRepository } from "./repository/TeamRepository";
-import { getStoreKeyName } from "apollo-utilities";
+import { UserRepository } from "./repository/UserRepository";
+import { importSchema } from "graphql-import"
 
 const companyRepo = new CompanyRepository();
 const projectRepo = new ProjectRepository();
 const teamRepo = new TeamRepository();
+const userRepo = new UserRepository();
 
-const typeDefs = gql(`
-
-     input ProjectInput {
-         name: String!
-         companyId: ID!
-     }
-
-     input TeamInput {
-         name: String!
-         sprint: String
-         goal: String
-         companyId: ID!
-         projectId: ID!
-     }
-
-     type Company {
-         id: ID!
-         name: String!
-         logo: String
-     }
-
-     type Project {
-         id: ID!
-         name: String!
-         companyId: ID!
-     }
-
-     type Team {
-         id: ID!
-         name: String!
-         sprint: String
-         goal: String
-         companyId: ID!
-         projectId: ID!
-     }
-
-     type Query {             
-         getCompany(id: ID!): Company!
-         getAllCompanies: [Company!]!
-         getCompanyWith(field: String!, value: String!): [Company]!
-         getProject(id: ID!): Project!
-         getAllProjects: [Project!]!
-         getProjectWith(field: String!, value: String!): [Project]!
-         getTeam(id: ID!): Team!
-         getAllTeams: [Team!]!      
-         getTeamWith(field: String!,value: String!): [Team]!
-     }     
-
-     type Mutation {
-
-         ### Company Mutations
-
-         newCompany(name: String!, logo: String): Company!
-         updateCompany(id: ID!, name: String!, logo: String ): Company!         
-
-         ### Project Mutations
-
-         newProject(input: ProjectInput!): Project!
-         updateProject(id: ID!, input: ProjectInput!): Project!
-         deleteProject(id: ID!): Boolean!
-
-         ### TEAM mutations
-
-         newTeam(input: TeamInput!): Team!
-         updateTeam(id: ID!, input: TeamInput!): Team!
-         deleteTeam(id: ID!): Boolean!
-
-     }
-
-`);
-
+const typeDefs = gql(importSchema("schema.graphql"));
 const resolvers = {
 
     Query: {
@@ -121,7 +51,20 @@ const resolvers = {
 
         async getTeamWith(_, {field, value}) {
             return await teamRepo.getWith(field, value);
+        },
+
+        async getUser(_ ,{id}) {
+            return await userRepo.get(id);
+        },
+
+        async getAllUsers() {
+            return await userRepo.getAll();
+        },
+
+        async getUserWith(_, {field, value}) {
+            return await userRepo.getWith(field, value);
         }
+
     },
     //
     Mutation: {
@@ -165,6 +108,16 @@ const resolvers = {
         async deleteTeam(_, {id}) {
             const response = await teamRepo.del(id);
             return response.affectedRows == 1;
+        },
+
+        async newUser(_, {input}) {
+            const response = await userRepo.save(input);
+            return await userRepo.get(response.insertId);
+        },
+
+        async updateUser(_, {id, input}) {
+            const response = await userRepo.update(id, input);            
+            return await userRepo.get(id);
         }
 
     }
@@ -179,5 +132,6 @@ const server = new ApolloServer({
 server
     .listen()
     .then((resp) => {
-        console.log(resp);
+        console.log("hello!")
+        // console.log(resp);
     });

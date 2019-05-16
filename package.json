@@ -4,13 +4,19 @@
   "description": "Sprinter Backend Project",
   "main": "handler.js",
   "scripts": {
-    "test": "jest --runInBand"
+    "test": "jest --runInBand",
+    "run": "tsc -w && nodemon ./lib/Server.js"
   },
   "dependencies": {
+    "@types/dotenv": "^6.1.1",
     "apollo-server": "^2.5.0",
+    "dotenv": "^8.0.0",
     "eslint": "^5.16.0",
     "graphql": "^14.3.0",
+    "graphql-import": "^0.7.1",
+    "graphql-tools": "^4.0.4",
     "mysql": "^2.17.1",
+    "pg": "^7.11.0",
     "source-map-support": "^0.5.10"
   },
   "devDependencies": {
@@ -19,6 +25,7 @@
     "@types/jest": "^24.0.11",
     "@types/mysql": "^2.15.6",
     "@types/node": "^10.12.18",
+    "@types/pg": "^7.4.14",
     "db-migrate": "^0.11.5",
     "db-migrate-mysql": "^1.1.10",
     "jest": "^24.7.1",

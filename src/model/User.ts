@@ -6,8 +6,8 @@ export interface User {
     mobile: string;
     role: string;
     teamId: number;
-    projectId: number,
-    companyId: number;    
+    projectId: number;
+    companyId: number;
 }
 
 export interface UserEntity extends User {

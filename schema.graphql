@@ -1,0 +1,103 @@
+enum Role {
+  DEVELOPER
+  PO
+  MANAGER
+}
+
+input ProjectInput {
+  name: String!
+  companyId: ID!
+}
+
+input TeamInput {
+  name: String!
+  sprint: String
+  goal: String
+  companyId: ID!
+  projectId: ID!
+}
+
+input UserInput {
+  name: String!
+  email: String!
+  password: String
+  image: String
+  mobile: String
+  role: Role = DEVELOPER
+  teamId: ID!
+  projectId: ID!
+  companyId: ID!
+}
+
+type Company {
+  id: ID!
+  name: String!
+  logo: String
+}
+
+type Project {
+  id: ID!
+  name: String!
+  companyId: ID!
+}
+
+type Team {
+  id: ID!
+  name: String!
+  sprint: String
+  goal: String
+  companyId: ID!
+  projectId: ID!
+}
+
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  password: String
+  image: String
+  mobile: String
+  role: String!
+  teamId: ID!
+  projectId: ID!
+  companyId: ID!
+}
+
+type Query {
+  getCompany(id: ID!): Company!
+  getAllCompanies: [Company!]!
+  getCompanyWith(field: String!, value: String!): [Company]!
+  getProject(id: ID!): Project!
+  getAllProjects: [Project!]!
+  getProjectWith(field: String!, value: String!): [Project]!
+  getTeam(id: ID!): Team!
+  getAllTeams: [Team!]!
+  getTeamWith(field: String!, value: String!): [Team]!
+  getUser(id: ID!): User!
+  getAllUsers: [User]!
+  getUserWith(field: String!, value: String!): [User]!
+}
+
+type Mutation {
+  ### Company Mutations
+
+  newCompany(name: String!, logo: String): Company!
+  updateCompany(id: ID!, name: String!, logo: String): Company!
+
+  ### Project Mutations
+
+  newProject(input: ProjectInput!): Project!
+  updateProject(id: ID!, input: ProjectInput!): Project!
+  deleteProject(id: ID!): Boolean!
+
+  ### TEAM mutations
+
+  newTeam(input: TeamInput!): Team!
+  updateTeam(id: ID!, input: TeamInput!): Team!
+  deleteTeam(id: ID!): Boolean!
+
+  ### USER Mutations
+
+  newUser(input: UserInput!): User!
+  updateUser(id: ID!, input: UserInput!): User!
+}
