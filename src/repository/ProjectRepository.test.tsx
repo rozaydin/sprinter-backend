@@ -1,7 +1,7 @@
 import { Project, ProjectEntity, ProjectImpl, ProjectEntityImpl } from "../model/Project";
 import { ProjectRepository } from "./ProjectRepository";
 import { CompanyRepository } from "./CompanyRepository";
-import { terminatePool } from "../service/DBService";
+import { terminatePool } from "../service/DBServiceMysql";
 
 const projectRepo = new ProjectRepository();
 const companyRepo = new CompanyRepository();

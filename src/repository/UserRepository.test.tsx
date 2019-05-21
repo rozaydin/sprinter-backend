@@ -4,7 +4,7 @@ import { CompanyRepository } from "./CompanyRepository";
 import { TeamRepository } from "./TeamRepository";
 import { ProjectRepository } from "./ProjectRepository";
 import { UserImpl } from "../model/User";
-import { terminatePool } from "../service/DBService";
+import { terminatePool } from "../service/DBServiceMysql";
 import { Company, CompanyEntity, CompanyImpl } from "../model/Company";
 import { Project, ProjectEntity, ProjectImpl } from "../model/Project";
 import { Team, TeamEntity, TeamImpl } from "../model/Team";

@@ -100,4 +100,6 @@ type Mutation {
 
   newUser(input: UserInput!): User!
   updateUser(id: ID!, input: UserInput!): User!
+  login(email: String!, password: String!): User!
+  changePassword(id: ID!, newPassword: String!): Boolean!
 }

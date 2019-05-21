@@ -1,6 +1,6 @@
 import { CompanyRepository } from "./CompanyRepository";
 import { CompanyImpl } from "../model/Company";
-import { terminatePool } from "../service/DBService";
+import { terminatePool } from "../service/DBServiceMysql";
 
 const companyService = new CompanyRepository();
 
