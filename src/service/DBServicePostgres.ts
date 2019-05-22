@@ -32,7 +32,7 @@ function initPool(): void {
             database: schema,
             user: user,
             password: pass,
-            ssl: false,
+            ssl: true,
             max: 1,
             min: 1
         });
