@@ -41,17 +41,22 @@ export function terminatePool(): Promise<void> {
 
 // Postgres Extensions
 
-function generateInsertQuery(tableName: string, object: Object) {
+function generateInsertQuery(tableName: string, object: Object) {    
 
     const props = [];
     const values = [];
     let index = 1;
-    for (let prop in object) {
-        if (object.hasOwnProperty(prop)) {
-            props.push(prop);
-            values.push("$" + index++);
-        }
-    }
+    Object.keys(object).forEach(prop => {        
+        props.push(prop);
+        values.push("$" + index++);
+    });
+
+    // for (let prop in object) {        
+    //     if (object.hasOwnProperty(prop)) {
+    //         props.push(prop);
+    //         values.push("$" + index++);
+    //     }
+    // }
 
     return `INSERT INTO ${tableName} (${props.join(",")}) VALUES (${values.join(",")}) RETURNING *`;
 }

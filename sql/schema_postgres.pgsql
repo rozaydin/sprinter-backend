@@ -1,18 +1,19 @@
 -- Postgresql Schema File
 
-DROP TABLE IF EXISTS "company" ;
+DROP TABLE IF EXISTS company ;
 
-CREATE TABLE IF NOT EXISTS "company" (
+CREATE TABLE IF NOT EXISTS company (
   "id" SERIAL,
   "name" VARCHAR(255) NOT NULL,
   "logo" VARCHAR(255) NULL,
   PRIMARY KEY ("id"));
 
-CREATE UNIQUE INDEX "company_name_UNIQUE" ON "company" ("name" ASC);
+CREATE UNIQUE INDEX company_name_UNIQUE ON company ("name" ASC);
 
-DROP TABLE IF EXISTS "project" ;
 
-CREATE TABLE IF NOT EXISTS "project" (
+DROP TABLE IF EXISTS project;
+
+CREATE TABLE IF NOT EXISTS project (
   "id" SERIAL,
   "name" VARCHAR(255) NULL,
   "companyId" INT NULL,
@@ -22,13 +23,11 @@ CREATE TABLE IF NOT EXISTS "project" (
     REFERENCES "company" ("id")
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
-	
-CREATE INDEX "project_company_idx" ON "project" ("companyId" ASC);
 
 
-DROP TABLE IF EXISTS "team" ;
+DROP TABLE IF EXISTS team;
 
-CREATE TABLE IF NOT EXISTS "team" (
+CREATE TABLE IF NOT EXISTS team (
   "id" SERIAL,
   "name" VARCHAR(255) NULL,
   "sprint" VARCHAR(45) NULL,
@@ -48,13 +47,9 @@ CREATE TABLE IF NOT EXISTS "team" (
     ON UPDATE NO ACTION);
 
 
-CREATE INDEX IF NOT EXISTS "team_company_idx" ON "team" ("companyId" ASC);
-CREATE INDEX IF NOT EXISTS "team_project_idx" ON "team" ("projectId" ASC);
+DROP TABLE IF EXISTS userr ;
 
-
-DROP TABLE IF EXISTS "userr" ;
-
-CREATE TABLE IF NOT EXISTS "userr" (
+CREATE TABLE IF NOT EXISTS userr (
   "id" SERIAL,
   "name" VARCHAR(255) NULL,
   "email" VARCHAR(255) NOT NULL,
@@ -82,7 +77,4 @@ CREATE TABLE IF NOT EXISTS "userr" (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
-CREATE UNIQUE INDEX "userr_email_UNIQUE" ON "userr" ("email" ASC);
-CREATE INDEX "userr_company_idx" ON "userr" ("companyId" ASC);
-CREATE INDEX "userr_project_idx" ON "userr" ("projectId" ASC);
-CREATE INDEX "userr_team_idx" ON "userr" ("teamId" ASC);
+CREATE UNIQUE INDEX userr_email_UNIQUE ON userr ("email" ASC);
