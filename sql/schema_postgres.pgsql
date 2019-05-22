@@ -1,5 +1,12 @@
 -- Postgresql Schema File
 
+-- Testing
+-- insert into company(name, logo) values('test', '') returning *;
+-- insert into project(name, companyId) values('test', 1) returning *;
+-- insert into team (name, sprint, goal, companyId, projectId) values ('test', 'test-sprint', 'implement', 1, 1);
+-- insert into userr (name, email, password, image, mobile, role, teamId, projectId, companyId) 
+-- values ('ridvan', 'ridvanozaydin@gmail.com', 'password', '', '05554519909', 'DEV', 1,1,1);
+
 DROP TABLE IF EXISTS company;
 
 CREATE TABLE IF NOT EXISTS company (
