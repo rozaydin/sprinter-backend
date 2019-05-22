@@ -6,13 +6,15 @@ import { ProjectRepository } from "./repository/ProjectRepository";
 import { TeamRepository } from "./repository/TeamRepository";
 import { UserRepository } from "./repository/UserRepository";
 import { importSchema } from "graphql-import"
+import * as schema from './gql/schema.gql'
 
 const companyRepo = new CompanyRepository();
 const projectRepo = new ProjectRepository();
 const teamRepo = new TeamRepository();
 const userRepo = new UserRepository();
 
-const typeDefs = gql(importSchema("schema.graphql"));
+// const typeDefs = gql(importSchema("schema.graphql"));
+const typeDefs = schema;
 const resolvers = {
 
     Query: {
@@ -138,17 +140,25 @@ const resolvers = {
             const response = await userRepo.update(id, { password: newPassword } as User);
             return response.affectedRows == 1;
         }
-
     }
-
 };
 
 const server = new ApolloServer({
     typeDefs,
-    resolvers
+    resolvers,
+    introspection: true,
+    playground: true,
 });
 
-
-// export handler
-const handler = server.createHandler();
-export { handler };
+export const handler = (event, lambdaContext, callback) => {
+    // Playground handler
+    if (event.httpMethod === 'GET') {
+      server.createHandler()(
+        {...event, path: event.requestContext.path || event.path},
+        lambdaContext,
+        callback,
+      );
+    } else {
+      server.createHandler()(event, lambdaContext, callback);
+    }
+};

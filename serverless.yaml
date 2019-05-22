@@ -1,8 +1,9 @@
 service:
-  name: users
+  name: sprinter
 
-plugins:
+plugins:  
   - serverless-webpack
+  - serverless-offline
 
 provider:
   name: aws
@@ -27,22 +28,25 @@ provider:
       Resource: "*"
 
 custom:
-  webpack:
-    webpackConfig: "webpack.config.js" # Name of webpack configuration file
-    includeModules: false
-    packager: "npm"
-    excludeFiles: src/**/*.tsx
+  serverless-offline:    
+    port: 4000
 
 functions:
-  user:
-    handler: src/UserHandler.createUser
-    layers:
-      - {Ref: FirebaseAdminLambdaLayer}
+  graphql:
+    handler: src/GraphQL.handler
+    # layers:
+    #   - {Ref: FirebaseAdminLambdaLayer}
     events:
-      - http: post users
-
-layers:
-  firebaseAdmin:
-    path: layer
-    compatibleRuntimes:
-      - nodejs8.10
+      - http:
+          path: graphql
+          method: post
+          cors: true
+      - http:
+          path: graphql
+          method: get
+          cors: true
+# layers:
+#   firebaseAdmin:
+#     path: layer
+#     compatibleRuntimes:
+#       - nodejs8.10

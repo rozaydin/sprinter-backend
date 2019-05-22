@@ -6,7 +6,7 @@ module.exports = {
   entry: slsw.lib.entries,
   devtool: false,
   resolve: {
-    extensions: ['.js', '.jsx', '.json', '.ts', '.tsx'],
+    extensions: ['.gql','.mjs', '.js', '.jsx', '.json', '.ts', '.tsx'],
   },
   output: {
     libraryTarget: 'commonjs',
@@ -20,8 +20,15 @@ module.exports = {
       {
         test: /\.tsx?$/,
         loader: 'ts-loader',
-        options: { onlyCompileBundledFiles: true },
+        options: {
+          onlyCompileBundledFiles: true
+        },
         exclude: /node_modules/,
+      },
+      {
+        test: /\.(graphql|gql)$/,
+        exclude: /node_modules/,
+        loader: 'graphql-tag/loader',
       },
     ],
   },
