@@ -16,3 +16,6 @@ lib
 
 # config files
 src/config
+
+# env files
+.env
