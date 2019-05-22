@@ -74,7 +74,7 @@ type Query {
   getAllTeams: [Team!]!
   getTeamWith(field: String!, value: String!): [Team]!
   getUser(id: ID!): User!
-  getAllUsers: [User]!
+  getAllUsers: [User!]!
   getUserWith(field: String!, value: String!): [User]!
 }
 
@@ -83,6 +83,7 @@ type Mutation {
 
   newCompany(name: String!, logo: String): Company!
   updateCompany(id: ID!, name: String!, logo: String): Company!
+  deleteCompany(id: ID!): Boolean!
 
   ### Project Mutations
 
@@ -100,6 +101,7 @@ type Mutation {
 
   newUser(input: UserInput!): User!
   updateUser(id: ID!, input: UserInput!): User!
-  login(email: String!, password: String!): User!
+  deleteUser(id: ID!): Boolean!
+  login(email: String!, password: String!): User
   changePassword(id: ID!, newPassword: String!): Boolean!
 }

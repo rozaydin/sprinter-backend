@@ -1,5 +1,7 @@
 const path = require('path');
 const slsw = require('serverless-webpack');
+const Dotenv = require('dotenv-webpack');
+const webpack = require('webpack');
 
 module.exports = {
   mode: slsw.lib.webpack.isLocal ? 'development' : 'production',
@@ -14,6 +16,10 @@ module.exports = {
     filename: '[name].js',
   },
   target: 'node',
+  plugins: [    
+    new Dotenv(),
+    new webpack.IgnorePlugin(/pg-native/),
+  ],
   module: {
     rules: [
       // all files with a `.ts` or `.tsx` extension will be handled by `ts-loader`

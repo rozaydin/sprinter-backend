@@ -52,9 +52,9 @@ CREATE INDEX IF NOT EXISTS "team_company_idx" ON "team" ("companyId" ASC);
 CREATE INDEX IF NOT EXISTS "team_project_idx" ON "team" ("projectId" ASC);
 
 
-DROP TABLE IF EXISTS "user" ;
+DROP TABLE IF EXISTS "userr" ;
 
-CREATE TABLE IF NOT EXISTS "user" (
+CREATE TABLE IF NOT EXISTS "userr" (
   "id" SERIAL,
   "name" VARCHAR(255) NULL,
   "email" VARCHAR(255) NOT NULL,
@@ -66,23 +66,23 @@ CREATE TABLE IF NOT EXISTS "user" (
   "projectId" INT NULL,
   "companyId" INT NULL,
   PRIMARY KEY ("id"),
-  CONSTRAINT "user_company"
+  CONSTRAINT "userr_company"
     FOREIGN KEY ("companyId")
     REFERENCES "company" ("id")
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT "user_project"
+  CONSTRAINT "userr_project"
     FOREIGN KEY ("projectId")
     REFERENCES "project" ("id")
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT "user_team"
+  CONSTRAINT "userr_team"
     FOREIGN KEY ("teamId")
     REFERENCES "team" ("id")
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
-CREATE UNIQUE INDEX "user_email_UNIQUE" ON "user" ("email" ASC);
-CREATE INDEX "user_company_idx" ON "user" ("companyId" ASC);
-CREATE INDEX "user_project_idx" ON "user" ("projectId" ASC);
-CREATE INDEX "user_team_idx" ON "user" ("teamId" ASC);
+CREATE UNIQUE INDEX "userr_email_UNIQUE" ON "userr" ("email" ASC);
+CREATE INDEX "userr_company_idx" ON "userr" ("companyId" ASC);
+CREATE INDEX "userr_project_idx" ON "userr" ("projectId" ASC);
+CREATE INDEX "userr_team_idx" ON "userr" ("teamId" ASC);

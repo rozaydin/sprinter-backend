@@ -1,10 +1,10 @@
-import * as dotenv from "dotenv";
+// import * as dotenv from "dotenv";
 import { Pool, QueryResult } from "pg";
 
 // prepare environment
-if (process.env.ENV_READY !== "TRUE") {
-    dotenv.config();
-}
+// if (process.env.ENV_READY !== "TRUE") {
+//     dotenv.config();
+// }
 
 const host = process.env.DB_HOST;
 const port = Number(process.env.DB_PORT);
@@ -127,6 +127,7 @@ export class CrudDaoImpl<O, E> implements CrudDao<O, E>{
 
     getAll(): Promise<E[]> {
         return getPool().query(`SELECT * FROM ${this.tableName}`).then(result => {
+            console.log(result);
             return Promise.resolve(result.rows);
         });
     }

@@ -60,7 +60,9 @@ const resolvers = {
         },
 
         async getAllUsers() {
-            return await userRepo.getAll();
+            const response =  await userRepo.getAll();
+            console.log(response);
+            return response;
         },
 
         async getUserWith(_, { field, value }) {
@@ -72,9 +74,12 @@ const resolvers = {
     Mutation: {
 
         async newCompany(_, { name, logo }) {
-            const response = await companyRepo.save(new CompanyImpl(name, logo));            
-            const companyEntitiy = await companyRepo.get(response.insertId);
-            return companyEntitiy;
+            const response = await companyRepo.save(new CompanyImpl(name, logo));
+            return response.rows[0];
+            // console.log(response);
+            // const insertId = response.fields["id"];
+            // const companyEntitiy = await companyRepo.get(insertId);
+            // return companyEntitiy;
         },
 
         async updateCompany(_, { id, name, logo }) {
@@ -82,9 +87,16 @@ const resolvers = {
             return await companyRepo.get(id);
         },
 
+        async deleteCompany(_, { id }) {
+            const response = await companyRepo.del(id);
+            return response.rowCount == 1;
+        },
+
         async newProject(_, { input }) {
             const response = await projectRepo.save(input);
-            return await projectRepo.get(response.insertId);
+            return response.rows[0];
+            // const insertId = response.fields["id"];
+            // return await projectRepo.get(insertId);
         },
 
         async updateProject(_, { id, input }) {
@@ -93,12 +105,14 @@ const resolvers = {
 
         async deleteProject(_, { id }) {
             const response = await projectRepo.del(id);
-            return response.affectedRows == 1;
+            return response.rowCount == 1;
         },
 
         async newTeam(_, { input }) {
             const response = await teamRepo.save(input);
-            return await teamRepo.get(response.insertId);
+            return response.rows[0];
+            // const insertId = response.fields["id"];
+            // return await teamRepo.get(insertId);
         },
 
         async updateTeam(_, { id, input }) {
@@ -107,21 +121,26 @@ const resolvers = {
 
         async deleteTeam(_, { id }) {
             const response = await teamRepo.del(id);
-            return response.affectedRows == 1;
+            return response.rowCount == 1;
         },
 
         async newUser(_, { input }) {
             const response = await userRepo.save(input);
-            return await userRepo.get(response.insertId);
+            return response.rows[0];
+            // const insertId = response.fields["id"];
+            // return await userRepo.get(insertId);
         },
 
         async updateUser(_, { id, input }) {
             return await userRepo.get(id);
         },
 
+        async deleteUser(_, { id }) {
+            return await userRepo.del(id);
+        },
+
         async login(_, { email, password }) {
             const user = await userRepo.getWith("email", email);
-            console.log(user[0]);
 
             if (user[0] != null) {
                 if (user[0].password === password) {
@@ -134,7 +153,7 @@ const resolvers = {
 
         async changePassword(_, { id, newPassword }) {
             const response = await userRepo.update(id, { password: newPassword } as User);
-            return response.affectedRows == 1;
+            return response.rowCount == 1;
         }
     }
 };
@@ -149,12 +168,12 @@ const server = new ApolloServer({
 export const handler = (event, lambdaContext, callback) => {
     // Playground handler
     if (event.httpMethod === 'GET') {
-      server.createHandler()(
-        {...event, path: event.requestContext.path || event.path},
-        lambdaContext,
-        callback,
-      );
+        server.createHandler()(
+            { ...event, path: event.requestContext.path || event.path },
+            lambdaContext,
+            callback,
+        );
     } else {
-      server.createHandler()(event, lambdaContext, callback);
+        server.createHandler()(event, lambdaContext, callback);
     }
 };
