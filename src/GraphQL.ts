@@ -1,11 +1,10 @@
-import { ApolloServer, gql, addErrorLoggingToSchema } from "apollo-server-lambda";
+import { ApolloServer } from "apollo-server-lambda";
 import { CompanyRepository } from "./repository/CompanyRepository";
-import { CompanyImpl, CompanyEntityImpl } from "./model/Company";
-import { User, UserEntity } from "./model/User";
+import { CompanyImpl } from "./model/Company";
+import { User } from "./model/User";
 import { ProjectRepository } from "./repository/ProjectRepository";
 import { TeamRepository } from "./repository/TeamRepository";
 import { UserRepository } from "./repository/UserRepository";
-import { importSchema } from "graphql-import"
 import * as schema from './gql/schema.gql'
 
 const companyRepo = new CompanyRepository();
@@ -73,7 +72,7 @@ const resolvers = {
     Mutation: {
 
         async newCompany(_, { name, logo }) {
-            const response = await companyRepo.save(new CompanyImpl(name, logo));
+            const response = await companyRepo.save(new CompanyImpl(name, logo));            
             const companyEntitiy = await companyRepo.get(response.insertId);
             return companyEntitiy;
         },
@@ -89,7 +88,6 @@ const resolvers = {
         },
 
         async updateProject(_, { id, input }) {
-            const response = await projectRepo.update(id, input);
             return await projectRepo.get(id);
         },
 
@@ -104,7 +102,6 @@ const resolvers = {
         },
 
         async updateTeam(_, { id, input }) {
-            const response = await teamRepo.update(id, input);
             return await teamRepo.get(id);
         },
 
@@ -119,7 +116,6 @@ const resolvers = {
         },
 
         async updateUser(_, { id, input }) {
-            const response = await userRepo.update(id, input);
             return await userRepo.get(id);
         },
 

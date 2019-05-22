@@ -1,10 +1,9 @@
-import { getPool, terminatePool, CrudDaoImpl } from "../service/DBServiceMysql";
-import { User, UserImpl, UserEntity } from "../model/User"
+import { CrudDaoImpl } from "../service/DBServicePostgres";
+import { User, UserEntity } from "../model/User"
 
 export class UserRepository extends CrudDaoImpl<User, UserEntity> {
 
     constructor() {
         super("user");
-    }   
-
+    }
 }

@@ -1,4 +1,4 @@
-import { getPool, OkPacket, CrudDaoImpl } from "../service/DBServiceMysql";
+import { CrudDaoImpl } from "../service/DBServicePostgres";
 import { Company, CompanyEntity } from "../model/Company";
 
 export class CompanyRepository extends CrudDaoImpl<Company, CompanyEntity> {
