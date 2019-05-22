@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS userr (
     ON UPDATE NO ACTION,
   CONSTRAINT userr_team
     FOREIGN KEY (teamId)
-    REFERENCES team" (id)
+    REFERENCES team (id)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
