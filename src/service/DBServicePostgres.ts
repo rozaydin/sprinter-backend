@@ -135,12 +135,14 @@ export class CrudDaoImpl<O, E> implements CrudDao<O, E>{
 
 
     getAll(): Promise<E[]> {
-        return getPool().query(`SELECT * FROM ${this.tableName}`).then(result => {
-            console.log(result);
+        return getPool().query(`SELECT * FROM ${this.tableName}`).then(result => {            
             return Promise.resolve(result.rows);
-        });
+        })
+        // .catch(err => {
+        //     console.log(err);
+        //     return [];
+        // });
     }
-
 
     del(id: any): Promise<QueryResult> {
         return getPool().query(`DELETE FROM ${this.tableName} WHERE id = $1`, [id]);

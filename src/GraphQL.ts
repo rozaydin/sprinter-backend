@@ -1,9 +1,12 @@
-import { ApolloServer } from "apollo-server-lambda";
+import { ApolloServer, AuthenticationError } from "apollo-server-lambda";
 import * as typeDefs from './gql/schema.gql'
 import { resolvers } from "./gql/resolvers";
 
 // webpack loader is doing the magic at the moment
 // const typeDefs = gql(importSchema("schema.graphql"));
+
+// load environment variables
+const auth_token = process.env.AUTH_TOKEN;
 
 const server = new ApolloServer({
     typeDefs,
@@ -12,7 +15,9 @@ const server = new ApolloServer({
     playground: true,
     context: ({ event }) => {
         const token = event.headers['Authorization'];
-        console.log(token);
+        if (token !== auth_token) {
+            throw new AuthenticationError('you must be logged in');	
+        }
         // if (event.path === '/graphql') {
         //     return { user: {} };
         // }
