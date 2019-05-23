@@ -12,10 +12,6 @@ const schema = process.env.DB_SCHEMA;
 const user = process.env.DB_USER;
 const pass = process.env.DB_PASS;
 
-console.log(host);
-console.log(port);
-console.log(schema);
-
 // create pg pool
 var _pool: Pool = null;
 
@@ -32,7 +28,7 @@ function initPool(): void {
             database: schema,
             user: user,
             password: pass,
-            ssl: true,
+            ssl: false,
             max: 1,
             min: 1
         });

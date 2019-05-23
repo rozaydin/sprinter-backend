@@ -1,7 +1,7 @@
 enum Role {
-  DEVELOPER
+  DEV
   PO
-  MANAGER
+  ADMIN
 }
 
 input ProjectInput {

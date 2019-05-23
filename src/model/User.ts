@@ -1,3 +1,9 @@
+export enum Role {
+    DEV = "DEV",
+    PO = "PO",
+    ADMIN = "ADMIN"
+}
+
 export interface User {
     name: string;
     email: string;
@@ -11,7 +17,7 @@ export interface User {
 }
 
 export interface UserEntity extends User {
-    id: number;    
+    id: number;
 }
 
 export class UserImpl implements User {

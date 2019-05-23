@@ -14,18 +14,18 @@ const server = new ApolloServer({
     introspection: true,
     playground: true,
     context: ({ event }) => {
-        const token = event.headers['Authorization'];
-        if (token !== auth_token) {
-            throw new AuthenticationError('you must be logged in');	
+        const token: string = event.headers['Authorization'];
+        if (token) {
+            const tokens = (token).split('&');
+            if (tokens.length == 2) {
+                if (tokens[0] == auth_token) {
+                    const userId = tokens[1];
+                    return {userId: userId};
+                }
+            }
         }
-        // if (event.path === '/graphql') {
-        //     return { user: {} };
-        // }
-        // else {
-        //     const user = retrieveUser(event);
-        //     if (!user) throw 'you must be logged in to query this schema';
-        //     return { user: user };
-        // }
+        // for all other cases
+        throw new AuthenticationError('you must be logged in');        
     }
 });
 

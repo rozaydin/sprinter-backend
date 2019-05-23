@@ -1,6 +1,6 @@
 import { CompanyRepository } from "../repository/CompanyRepository";
 import { CompanyImpl } from "../model/Company";
-import { User } from "../model/User";
+import { User, Role } from "../model/User";
 import { ProjectRepository } from "../repository/ProjectRepository";
 import { TeamRepository } from "../repository/TeamRepository";
 import { UserRepository } from "../repository/UserRepository";
@@ -10,23 +10,34 @@ const projectRepo = new ProjectRepository();
 const teamRepo = new TeamRepository();
 const userRepo = new UserRepository();
 
+// Authorization
+
+
+// resolvers
 export const resolvers = {
 
     Query: {
-        async getCompany(_, { id }, { _user }) {            
-            // authorization
-            if (_user != null) {
-                
+        async getCompany(_, { id }, { _userId }) {
+            // Authorization
+            const user = await userRepo.get(_userId);
+            if (user.role == Role.ADMIN || id == user.companyId) {
+                const response = await companyRepo.get(id);
+                return response;
             }
-            const user: User = _user;
-            console.log(user);
-
-            const response = await companyRepo.get(id);
-            return response;
+            else {
+                return {};
+            }
         },
 
-        async getAllCompanies(_) {
-            return await companyRepo.getAll();
+        async getAllCompanies(_, __, { userId }) {
+            // Authorization
+            const user = await userRepo.get(userId);
+            if (user.role == Role.ADMIN) {
+                return await companyRepo.getAll();
+            }
+            else {
+                return [];
+            }
         },
 
         async getCompanyWith(_, { field, value }) {
