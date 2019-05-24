@@ -11,7 +11,7 @@ const teamRepo = new TeamRepository();
 const userRepo = new UserRepository();
 
 // Authorization
-
+const auth_token = process.env.AUTH_TOKEN;
 
 // resolvers
 export const resolvers = {
@@ -158,7 +158,19 @@ export const resolvers = {
 
             if (user[0] != null) {
                 if (user[0].password === password) {
-                    return user[0];
+                    // succefful login response
+                    return {
+                        result: true,
+                        user: user[0],
+                        token: auth_token
+                    }                    
+                }
+            }
+            else {
+                return {
+                    result: false,
+                    user: null,
+                    token: null
                 }
             }
             //

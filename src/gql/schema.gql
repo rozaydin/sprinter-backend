@@ -63,6 +63,12 @@ type User {
   companyId: ID!
 }
 
+type LoginResponse {
+  login: Boolean!
+  user: User
+  token: String
+}
+
 type Query {
   getCompany(id: ID!): Company!
   getAllCompanies: [Company!]!
@@ -102,6 +108,6 @@ type Mutation {
   newUser(input: UserInput!): User!
   updateUser(id: ID!, input: UserInput!): User!
   deleteUser(id: ID!): Boolean!
-  login(email: String!, password: String!): User
+  login(email: String!, password: String!): LoginResponse!
   changePassword(id: ID!, newPassword: String!): Boolean!
 }
