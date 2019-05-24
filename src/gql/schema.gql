@@ -64,7 +64,7 @@ type User {
 }
 
 type LoginResponse {
-  login: Boolean!
+  result: Boolean!
   user: User
   token: String
 }
