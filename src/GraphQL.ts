@@ -14,26 +14,26 @@ const server = new ApolloServer({
     introspection: true,
     playground: true,
     context: ({ event }) => {
+
+        const body = JSON.parse(event.body);
+        const operationName = body.operationName;
+
         const token: string = event.headers['Authorization'];
         if (token) {
             const tokens = (token).split('&');
             if (tokens.length == 2) {
                 if (tokens[0] == auth_token) {
                     const userId = tokens[1];
-                    return {userId: userId};
+                    return { userId: userId };
                 }
             }
         }
-        // for all other cases
-        throw new AuthenticationError('you must be logged in');        
+        // for all other cases except login
+        if (operationName !== 'login') {
+            throw new AuthenticationError('you must be logged in');
+        }
     }
 });
-
-function retrieveUser(sth: any) {
-    console.log("i am alive");
-    console.log(sth);
-    return null;
-}
 
 export const handler = (event, lambdaContext, callback) => {
     // Playground handler
