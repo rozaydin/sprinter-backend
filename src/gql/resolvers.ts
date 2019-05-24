@@ -155,6 +155,7 @@ export const resolvers = {
 
         async login(_, { email, password }) {
             const user = await userRepo.getWith("email", email);
+            console.log(user[0]);
 
             if (user[0] != null) {
                 if (user[0].password === password) {
