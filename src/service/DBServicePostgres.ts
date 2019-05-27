@@ -47,16 +47,9 @@ function generateInsertQuery(tableName: string, object: Object) {
     const values = [];
     let index = 1;
     Object.keys(object).forEach(prop => {        
-        props.push(prop);
+        props.push( (prop as string).toLowerCase() );
         values.push("$" + index++);
     });
-
-    // for (let prop in object) {        
-    //     if (object.hasOwnProperty(prop)) {
-    //         props.push(prop);
-    //         values.push("$" + index++);
-    //     }
-    // }
 
     return `INSERT INTO ${tableName} (${props.join(",")}) VALUES (${values.join(",")}) RETURNING *`;
 }
@@ -71,12 +64,10 @@ function generateSetQuery(object: Object): any[] {
     const props: Array<string> = [];
     let index = 1;
 
-    for (let prop in object) {
-        //
-        if (object.hasOwnProperty(prop)) {
-            props.push(prop + " = $" + index++);
-        }
-    }
+    Object.keys(object).forEach(prop => {
+        props.push( (prop as string).toLowerCase() );
+        props.push(prop + " = $" + index++);
+    })
     //
     const sql = props.join(",");
     return [`SET ${sql}`, index];
