@@ -64,9 +64,8 @@ function generateSetQuery(object: Object): any[] {
     const props: Array<string> = [];
     let index = 1;
 
-    Object.keys(object).forEach(prop => {
-        props.push( (prop as string).toLowerCase() );
-        props.push(prop + " = $" + index++);
+    Object.keys(object).forEach(prop => {        
+        props.push((prop as string).toLowerCase() + " = $" + index++);
     })
     //
     const sql = props.join(",");
@@ -104,7 +103,8 @@ export class CrudDaoImpl<O, E> implements CrudDao<O, E>{
     }
 
     update(id: any, object: O): Promise<QueryResult> {
-        const sqlQuery = generateUpdateQuery(this.tableName, object);        
+        const sqlQuery = generateUpdateQuery(this.tableName, object);     
+        console.log(sqlQuery);
         return getPool().query(sqlQuery, [].concat(Object.values(object)).concat(id));
     }
 

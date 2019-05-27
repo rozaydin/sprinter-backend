@@ -130,6 +130,7 @@ export const resolvers = {
         },
 
         async updateTeam(_, { id, input }) {
+            await teamRepo.update(id, input);
             return await teamRepo.get(id);
         },
 
@@ -164,7 +165,7 @@ export const resolvers = {
                         result: true,
                         user: user[0],
                         token: auth_token
-                    }                    
+                    }
                 }
             }
             else {
@@ -178,9 +179,15 @@ export const resolvers = {
             return user[0];
         },
 
-        async changePassword(_, { id, newPassword }) {
-            const response = await userRepo.update(id, { password: newPassword } as User);
-            return response.rowCount == 1;
+        async changePassword(_, { id, currPassword, newPassword }) {
+            const user = await userRepo.get(id);
+            if (user.password == currPassword) {
+                const response = await userRepo.update(id, { password: newPassword } as User);
+                return response.rowCount == 1;
+            }
+            else {
+                return false;
+            }
         }
     }
 };

@@ -6,15 +6,15 @@ enum Role {
 
 input ProjectInput {
   name: String!
-  companyId: ID!
+  companyid: ID!
 }
 
 input TeamInput {
   name: String!
   sprint: String
   goal: String
-  companyId: ID!
-  projectId: ID!
+  companyid: ID!
+  projectid: ID!
 }
 
 input UserInput {
@@ -24,9 +24,9 @@ input UserInput {
   image: String
   mobile: String
   role: Role = DEVELOPER
-  teamId: ID!
-  projectId: ID!
-  companyId: ID!
+  teamid: ID!
+  projectid: ID!
+  companyid: ID!
 }
 
 type Company {
@@ -38,7 +38,7 @@ type Company {
 type Project {
   id: ID!
   name: String!
-  companyId: ID!
+  companyid: ID!
 }
 
 type Team {
@@ -46,8 +46,8 @@ type Team {
   name: String!
   sprint: String
   goal: String
-  companyId: ID!
-  projectId: ID!
+  companyid: ID!
+  projectid: ID!
 }
 
 type User {
@@ -58,9 +58,9 @@ type User {
   image: String
   mobile: String
   role: String!
-  teamId: ID!
-  projectId: ID!
-  companyId: ID!
+  teamid: ID!
+  projectid: ID!
+  companyid: ID!
 }
 
 type LoginResponse {
@@ -109,5 +109,5 @@ type Mutation {
   updateUser(id: ID!, input: UserInput!): User!
   deleteUser(id: ID!): Boolean!
   login(email: String!, password: String!): LoginResponse!
-  changePassword(id: ID!, newPassword: String!): Boolean!
+  changePassword(id: ID!, currPassword: String!, newPassword: String!): Boolean!
 }
