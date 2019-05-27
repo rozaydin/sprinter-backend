@@ -16,7 +16,7 @@ const server = new ApolloServer({
     context: ({ event }) => {
 
         const body = JSON.parse(event.body);
-        const operationName = body.operationName;
+        const operationName = body.operationName;        
 
         const token: string = event.headers['Authorization'];
         if (token) {
@@ -28,6 +28,7 @@ const server = new ApolloServer({
                 }
             }
         }
+        
         // for all other cases except login
         if (operationName !== 'login') {
             throw new AuthenticationError('you must be logged in');
