@@ -151,7 +151,8 @@ export const resolvers = {
         },
 
         async deleteUser(_, { id }) {
-            return await userRepo.del(id);
+            const response = await userRepo.del(id);
+            return response.rowCount == 1;
         },
 
         async login(_, { email, password }) {
