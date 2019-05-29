@@ -106,7 +106,7 @@ type Mutation {
   ### USER Mutations
 
   newUser(input: UserInput!): User!
-  updateUser(id: ID!, input: UserInput!): User!
+  updateUser(id: ID!, input: UserInput!): Boolean!
   deleteUser(id: ID!): Boolean!
   login(email: String!, password: String!): LoginResponse!
   changePassword(id: ID!, currPassword: String!, newPassword: String!): Boolean!

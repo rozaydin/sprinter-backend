@@ -103,8 +103,7 @@ export class CrudDaoImpl<O, E> implements CrudDao<O, E>{
     }
 
     update(id: any, object: O): Promise<QueryResult> {
-        const sqlQuery = generateUpdateQuery(this.tableName, object);     
-        console.log(sqlQuery);
+        const sqlQuery = generateUpdateQuery(this.tableName, object);
         return getPool().query(sqlQuery, [].concat(Object.values(object)).concat(id));
     }
 

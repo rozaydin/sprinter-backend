@@ -147,7 +147,8 @@ export const resolvers = {
         },
 
         async updateUser(_, { id, input }) {
-            return await userRepo.get(id);
+            const response = await userRepo.update(id, input);
+            return response.rowCount == 1;
         },
 
         async deleteUser(_, { id }) {
