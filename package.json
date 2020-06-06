@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@types/dotenv": "^6.1.1",
-    "apollo-server-lambda": "^2.5.0",
+    "apollo-server-lambda": "^2.14.2",
     "dotenv": "^8.0.0",
     "dotenv-webpack": "^1.7.0",
     "eslint": "^5.16.0",
